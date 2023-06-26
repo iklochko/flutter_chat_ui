@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:intl/intl.dart';
@@ -418,10 +420,9 @@ class ChatState extends State<Chat> {
       if (message is types.SystemMessage) {
         messageWidget = widget.systemMessageBuilder?.call(message) ?? SystemMessage(message: message.text);
       } else {
-        final messageWidth = constraints.maxWidth.floor();
-        // widget.showUserAvatars && message.author.id != widget.user.id
-        //     ? min(constraints.maxWidth * 0.72, 440).floor()
-        //     : min(constraints.maxWidth * 0.78, 440).floor();
+        final messageWidth = widget.showUserAvatars && message.author.id != widget.user.id
+            ? min(constraints.maxWidth * 0.72, 440).floor()
+            : min(constraints.maxWidth * 0.78, 440).floor();
 
         messageWidget = Message(
           audioMessageBuilder: widget.audioMessageBuilder,
